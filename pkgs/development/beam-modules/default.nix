@@ -41,6 +41,7 @@ let
       erlang-ls = callPackage ./erlang-ls { };
       erlfmt = callPackage ./erlfmt { };
       elvis-erlang = callPackage ./elvis-erlang { };
+      erlang-language-platform = callPackage ./erlang-language-platform { };
 
       # BEAM-based languages.
       elixir = elixir_1_15;

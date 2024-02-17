@@ -17508,7 +17508,7 @@ with pkgs;
   erlang_nox = beam_nox.interpreters.erlang;
 
   inherit (beam.packages.erlang)
-    erlang-ls erlfmt elvis-erlang
+    erlang-ls erlfmt elvis-erlang erlang-language-platform
     rebar rebar3 rebar3WithPlugins
     fetchHex
     lfe lfe_2_1;
