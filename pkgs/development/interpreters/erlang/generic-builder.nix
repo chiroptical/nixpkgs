@@ -18,9 +18,11 @@
 , libGLU ? null
 , wxGTK ? null
 , xorg ? null
+, exdoc ? null
 , parallelBuild ? false
 , systemd
 , wxSupport ? true
+, exdocSupport ? false
 , systemdSupport ? lib.meta.availableOn stdenv.hostPlatform systemd # systemd support in epmd
   # updateScript deps
 , writeScript
@@ -76,6 +78,7 @@ else libGL != null && libGLU != null && wxGTK != null && xorg != null);
 
 assert odbcSupport -> unixODBC != null;
 assert javacSupport -> openjdk11 != null;
+assert exdocSupport -> exdoc != null;
 
 let
   inherit (lib) optional optionals optionalAttrs optionalString;
@@ -113,8 +116,18 @@ stdenv.mkDerivation ({
     ${postPatch}
   '';
 
+  # For OTP 27+ we need ex_doc to build the documentation
+  # When exdocSupport is enabled, patch ex_doc and setup necessary assets
   preConfigure = ''
     ./otp_build autoconf
+  '' + optionalString exdocSupport ''
+    mkdir -p $out/bin
+    cp ${exdoc}/bin/.ex_doc-wrapped $out/bin/ex_doc
+    sed -i "1 s:^.*$:#!$out/bin/escript:" $out/bin/ex_doc
+    export EX_DOC=$out/bin/ex_doc
+
+    mkdir -p $out/lib/erlang/system/doc/assets
+    cp $src/system/doc/assets/erlang-logo.png $out/lib/erlang/system/doc/assets
   '';
 
   configureFlags = [ "--with-ssl=${lib.getOutput "out" opensslPackage}" ]
