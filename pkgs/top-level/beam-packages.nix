@@ -43,7 +43,7 @@ in
       wxGTK = wxGTK32;
       parallelBuild = true;
       autoconf = buildPackages.autoconf269;
-      inherit (beam_nodocs.packages.erlang_27) ex_doc;
+      ex_doc = beam_nodocs.packages.erlang_27.ex_doc_otp;
       inherit ex_docSupport wxSupport systemdSupport;
     };
 
