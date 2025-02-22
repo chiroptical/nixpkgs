@@ -1,14 +1,14 @@
-{ lib, elixir, fetchFromGitHub, fetchMixDeps, mixRelease, nix-update-script, revision, exDocHash, mixDepsHash}:
+{ lib, elixir, fetchFromGitHub, fetchMixDeps, mixRelease, nix-update-script }:
 # Based on ../elixir-ls/default.nix
 
 let
   pname = "ex_doc";
-  version = revision;
+  version = "0.37.2";
   src = fetchFromGitHub {
     owner = "elixir-lang";
     repo = "${pname}";
     rev = "v${version}";
-    hash = exDocHash;
+    hash = "sha256-BQbqaZq8pCfXrxJh03uV/WpH07bGoVUciX1wh8hFlxM=";
   };
 in
 mixRelease {
@@ -19,7 +19,7 @@ mixRelease {
   mixFodDeps = fetchMixDeps {
     pname = "mix-deps-${pname}";
     inherit src version elixir;
-    hash = mixDepsHash;
+    hash = "sha256-s4b6wuBJPdN0FPn76zbLCHzqJNEZ6E4nOyB1whUM2VY=";
   };
 
   configurePhase = ''

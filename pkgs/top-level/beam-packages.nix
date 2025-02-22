@@ -43,7 +43,17 @@ in
       wxGTK = wxGTK32;
       parallelBuild = true;
       autoconf = buildPackages.autoconf269;
-      ex_doc = beam_nodocs.packages.erlang_27.ex_doc_otp;
+      # OTP uses this version to build documentation 
+      # https://github.com/erlang/otp/blob/OTP-27.2.4/make/ex_doc_vsn
+      ex_doc = beam_nodocs.packages.erlang_27.ex_doc.overrideAttrs(final: prev: {
+        version = "0.34.1";
+        src = prev.src.overrideAttrs {
+          hash = "sha256-OXIRippEDYAKD222XzNJkkZdXbUkDUauv5amr4oAU7c=";
+        };
+        mixFodDeps = prev.mixFodDeps.overrideAttrs {
+          hash = "sha256-0000000000000000000000000000000000000000000=";
+        };
+      });
       inherit ex_docSupport wxSupport systemdSupport;
     };
 

@@ -80,22 +80,8 @@ let
       # Remove old versions of elixir, when the supports fades out:
       # https://hexdocs.pm/elixir/compatibility-and-deprecations.html
 
-      # This version is intentionally held back to build erlang 27+
-      # See https://github.com/erlang/otp/blob/master/make/ex_doc_vsn
-      ex_doc_otp = callPackage ./ex_doc {
-        inherit fetchMixDeps mixRelease;
-        revision = "0.34.1";
-        exDocHash = "sha256-OXIRippEDYAKD222XzNJkkZdXbUkDUauv5amr4oAU7c=";
-        mixDepsHash = "sha256-fYINsATbw3M3r+IVoYS14aVEsg9OBuH6mNUqzQJuDQo=";
-        elixir = elixir_1_17;
-      };
-
       ex_doc = callPackage ./ex_doc {
         inherit fetchMixDeps mixRelease;
-        revision = "0.36.1";
-        exDocHash = "sha256-BAGRSgPLeBWUHczEen1cMrCKstjHBRD8Hqb9oaRnYLg=";
-        mixDepsHash = "sha256-kqy4EXP87CIw7J0qtWAk50SMfRYYlb9MsCoPaKb5hqw=";
-        elixir = elixir_1_17;
       };
 
       elixir-ls = callPackage ./elixir-ls { inherit elixir fetchMixDeps mixRelease; };
